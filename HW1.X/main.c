@@ -62,7 +62,31 @@ int main() {
     __builtin_enable_interrupts();
 
     while(1) {
+        
+        if(PORTBbits.RB4)
+        {
+            _CPO_SET_COUNT(0); // This will set the core timer to zero.
+            TRISAbits.TRISA4 = 0;
+            while(CPO_GET_COUNT() <= 24000)
+            {
+                ; // do nothing for .5ms
+            }
+            
+            _CPO_SET_COUNT(0);
+            TRISAbits.TRISA4 = 1;
+            while(CPO_GET_COUNT() <= 24000)
+            {
+                ; // do nothing for .5ms
+            }
+        }
+        
+        else
+        {
+            _CPO_SET_COUNT(0);
+            TRISAbits.TRISA4 = 1;
+        }
 	// use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing
+    
 	// remember the core timer runs at half the sysclk
     }
 }

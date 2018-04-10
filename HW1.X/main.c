@@ -65,16 +65,16 @@ int main() {
         
         if(PORTBbits.RB4)
         {
-            _CPO_SET_COUNT(0); // This will set the core timer to zero.
+            _CP0_SET_COUNT(0); // This will set the core timer to zero.
             TRISAbits.TRISA4 = 0;
-            while(CPO_GET_COUNT() <= 24000)
+            while(_CP0_GET_COUNT() <= 12000)
             {
                 ; // do nothing for .5ms
             }
             
-            _CPO_SET_COUNT(0);
+            _CP0_SET_COUNT(0);
             TRISAbits.TRISA4 = 1;
-            while(CPO_GET_COUNT() <= 24000)
+            while(_CP0_GET_COUNT() <= 12000)
             {
                 ; // do nothing for .5ms
             }
@@ -82,7 +82,7 @@ int main() {
         
         else
         {
-            _CPO_SET_COUNT(0);
+            _CP0_SET_COUNT(0);
             TRISAbits.TRISA4 = 1;
         }
 	// use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing

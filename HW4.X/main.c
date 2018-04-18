@@ -41,11 +41,11 @@
 
 // send a byte via spi and return the response
 unsigned char spi_io(unsigned char o) {
-  SPI4BUF = o;
-  while(!SPI4STATbits.SPIRBF) { // wait to receive the byte
+  SPI1BUF = o;
+  while(!SPI1STATbits.SPIRBF) { // wait to receive the byte
     ;
   }
-  return SPI4BUF;
+  return SPI1BUF;
 }
 
 void DAC_init() {
@@ -54,6 +54,7 @@ void DAC_init() {
   // when a command is beginning (clear CS to low) and when it
   // is ending (set CS high)
   TRISBbits.TRISB8 = 0;
+  RPA1Rbits.RPA1R = 0b0011;
   CS = 1;
 
   // Master - SPI1, pins are: SDI4(F4), SDO4(F5), SCK4(F13).  
@@ -75,6 +76,8 @@ void DAC_init() {
   spi_io(0x41);             // sequential mode (mode = 0b01), hold disabled (hold = 0)
   CS = 1;                   // finish the command
 }
+
+
 
 
 int main() {

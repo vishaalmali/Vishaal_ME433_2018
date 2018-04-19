@@ -78,7 +78,12 @@ void DAC_init() {
 }
 
 
-
+void setVoltage(char channel, int voltage)
+{
+    // set up data to send to DAC
+    int temp = voltage;
+    temp = temp
+}
 
 int main() {
 
@@ -109,24 +114,11 @@ int main() {
         if(PORTBbits.RB4)
         {
             _CP0_SET_COUNT(0); // This will set the core timer to zero.
-            TRISAbits.TRISA4 = 0;
+         
             while(_CP0_GET_COUNT() <= 12000)
             {
                 ; // do nothing for .5ms
             }
-            
-            _CP0_SET_COUNT(0);
-            TRISAbits.TRISA4 = 1;
-            while(_CP0_GET_COUNT() <= 12000)
-            {
-                ; // do nothing for .5ms
-            }
-        }
-        
-        else
-        {
-            _CP0_SET_COUNT(0);
-            TRISAbits.TRISA4 = 1;
         }
 	// use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing
     

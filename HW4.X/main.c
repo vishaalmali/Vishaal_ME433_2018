@@ -64,7 +64,7 @@ void DAC_init() {
   // setup spi1
   SPI1CON = 0;              // turn off the spi module and reset it
   SPI1BUF;                  // clear the rx buffer by reading from it
-  SPI1BRG = 0x3;            // baud rate to 10 MHz [SPI4BRG = (80000000/(2*desired))-1]
+  SPI1BRG = 1000;            // baud rate to 10 MHz [SPI4BRG = (80000000/(2*desired))-1]
   SPI1STATbits.SPIROV = 0;  // clear the overflow bit
   SPI1CONbits.CKE = 1;      // data changes when clock goes from hi to lo (since CKP is 0)
   SPI1CONbits.MSTEN = 1;    // master operation
@@ -81,8 +81,26 @@ void DAC_init() {
 void setVoltage(char channel, int voltage)
 {
     // set up data to send to DAC
+    int OUTA = 0b0111000000000000;
+    int OUTB = 0b1111000000000000;
     int temp = voltage;
-    temp = temp
+    temp = (temp & 0b0000001111111111);
+    temp = (temp << 2);
+    
+    if (channel == 'A')
+    {
+        temp = (OUTA | temp);
+    }
+    
+    else
+    {
+        temp = (OUTB | temp);
+    }
+    
+    CS = 0;
+    spi_io((unsigned char)(temp >> 8));
+    spi_io((unsigned char)(temp & 0b0000000011111111));
+    CS = 1;
 }
 
 int main() {
@@ -108,14 +126,19 @@ int main() {
     
 
     __builtin_enable_interrupts();
+    
+    DAC_init();
+    
 
     while(1) {
         
-        if(PORTBbits.RB4)
-        {
             _CP0_SET_COUNT(0); // This will set the core timer to zero.
+            
+            char channel_select = 'B';
+            
+            setVoltage(channel_select, 512);
          
-            while(_CP0_GET_COUNT() <= 12000)
+            while(_CP0_GET_COUNT() <= 24000)
             {
                 ; // do nothing for .5ms
             }
@@ -124,4 +147,3 @@ int main() {
     
 	// remember the core timer runs at half the sysclk
     }
-}

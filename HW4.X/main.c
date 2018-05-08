@@ -129,7 +129,7 @@ int main() {
     
     DAC_init();
     
-    int count = 0;
+    int counter = 0;
     int voltage_sin;
     double phase_calc;
 
@@ -137,10 +137,10 @@ int main() {
         
             _CP0_SET_COUNT(0); // This will set the core timer to zero.
             
-            count++
-            if(count >= 200)
+            counter++;
+            if(counter >= 200)
             {
-                count = 0;
+                counter = 0;
             }
             char channel_select = 'A';
             phase_calc = sin(2.0*M_PI*counter/100);
@@ -157,3 +157,4 @@ int main() {
 	// use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing
     
 	// remember the core timer runs at half the sysclk
+}

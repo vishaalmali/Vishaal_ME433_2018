@@ -137,6 +137,11 @@ int main() {
         
             _CP0_SET_COUNT(0); // This will set the core timer to zero.
             
+            count++
+            if(count >= 200)
+            {
+                count = 0;
+            }
             char channel_select = 'A';
             phase_calc = sin(2.0*M_PI*counter/100);
             voltage_sin = 512 + (511*phase_calc);
@@ -152,4 +157,3 @@ int main() {
 	// use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing
     
 	// remember the core timer runs at half the sysclk
-    }

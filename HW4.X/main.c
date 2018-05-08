@@ -129,18 +129,24 @@ int main() {
     
     DAC_init();
     
+    int count = 0;
+    int voltage_sin;
+    double phase_calc;
 
     while(1) {
         
             _CP0_SET_COUNT(0); // This will set the core timer to zero.
             
-            char channel_select = 'B';
+            char channel_select = 'A';
+            phase_calc = sin(2.0*M_PI*counter/100);
+            voltage_sin = 512 + (511*phase_calc);
             
-            setVoltage(channel_select, 512);
+            
+            setVoltage(channel_select, voltage_sin);
          
             while(_CP0_GET_COUNT() <= 24000)
             {
-                ; // do nothing for .5ms
+                ; // this will wait for 1ms to pass (in this case, we want to update the values 1000/second)
             }
         }
 	// use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing

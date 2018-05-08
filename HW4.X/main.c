@@ -103,6 +103,21 @@ void setVoltage(char channel, int voltage)
     CS = 1;
 }
 
+int triangle_wave(int counter2)
+{
+    int voltage = 0;
+    
+    if (counter2 < 100)
+    {
+        voltage = (int) ((float) counter2 * (1023.0/100));
+    }
+    
+    else if (counter2 < 200)
+    {
+        voltage = (int) ((float) (200 - counter2)* (1023.0/100));
+    }
+    return voltage;
+}
 int main() {
 
     __builtin_disable_interrupts();
@@ -131,6 +146,7 @@ int main() {
     
     int counter = 0;
     int voltage_sin;
+    int voltage_triang;
     double phase_calc;
 
     while(1) {
@@ -146,8 +162,12 @@ int main() {
             phase_calc = sin(2.0*M_PI*counter/100);
             voltage_sin = 512 + (511*phase_calc);
             
+            voltage_triang = triangle_wave(counter);
+            
             
             setVoltage(channel_select, voltage_sin);
+            setVoltage('B', voltage_triang);
+            
          
             while(_CP0_GET_COUNT() <= 24000)
             {

@@ -14,6 +14,7 @@
                    projectFiles="true">
       <itemPath>ST7735.c</itemPath>
       <itemPath>ST7735.h</itemPath>
+      <itemPath>main.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

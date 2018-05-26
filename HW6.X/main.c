@@ -55,7 +55,7 @@ void drawChar(unsigned short x, unsigned short y, unsigned short color1, unsigne
         {
             if (x + col < 128)
             {
-                if (pixels >> row & 1)
+                if (pixels >> row & 1 == 1)
                 {
                     LCD_drawPixel(x+col, y+row, color1);
                 }
@@ -83,11 +83,32 @@ void LCD_drawString(unsigned short x, unsigned short y, unsigned char* message, 
     
 }
 
-//void LCD_progressBar(unsigned short x, unsigned short y, unsigned short h, unsigned short value)
+void LCD_progressBar(unsigned short x, unsigned short y, unsigned short h, unsigned short value)
+{
+    unsigned short height = 0;
+    unsigned short length = 0;
+    
+    for(length = 0; length < 100; length++)
+    {
+        for(height = 0; height < h; height++)
+        {
+            if (length < value)
+            {
+                LCD_drawPixel(x+length, y+height, GREEN);
+            }
+            else
+            {
+                LCD_drawPixel(x+length, y+height, BLACK);
+            }
+        }
+    }
+}
 
 int main() {
     
     // variable initializations
+    
+   
     
     unsigned char message[30];
     unsigned short percentage = 0;
@@ -114,6 +135,8 @@ int main() {
     LCD_init();
     LCD_clearScreen(BLACK);
     
+    
+    
 
     __builtin_enable_interrupts();
     
@@ -123,14 +146,27 @@ int main() {
         
             _CP0_SET_COUNT(0); // This will set the core timer to zero.
             
-            sprintf(message, "Hello World: %d! ", percentage);
+            sprintf(message, "Hello World: %d ", percentage);
             LCD_drawString(10, 32, message, GREEN, BLACK);
+            LCD_progressBar(10, 44, 10, percentage);
             
-         
+         // Heartbeat code
             while(_CP0_GET_COUNT() < 24000000)
             {
                 
-                ; // this will wait for 1ms to pass (in this case, we want to update the values 1000/second)
+                while(!PORTBbits.RB4)
+                {
+                    LATAbits.LATA4 = 0;
+                } // this will wait for 1ms to pass (in this case, we want to update the values 1000/second)
+                
+            }
+            LATAINV = 0x10;
+            
+            percentage++;
+            
+            if (percentage > 100)
+            {
+                percentage = 0;
             }
         }
 	// use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing

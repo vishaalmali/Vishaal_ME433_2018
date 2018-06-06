@@ -104,6 +104,17 @@ void LCD_progressBar(unsigned short x, unsigned short y, unsigned short h, unsig
     }
 }
 
+void Calculate_FPS(unsigned short x, unsigned short y)
+{
+    unsigned char message[30];
+    int time_elapsed = _CP0_GET_COUNT();
+    float fps = (24000000.0/(float) time_elapsed);
+    
+    sprintf(message, "fps: %f ", fps);
+    LCD_drawString(x, y, message, GREEN, BLACK);
+    
+}
+
 int main() {
     
     // variable initializations
@@ -132,8 +143,6 @@ int main() {
     TRISAbits.TRISA4 = 0;
     LATAbits.LATA4 = 1;
     
-    LCD_init();
-    LCD_clearScreen(BLACK);
     
     
     
@@ -141,6 +150,8 @@ int main() {
     __builtin_enable_interrupts();
     
     
+     LCD_init();
+     LCD_clearScreen(BLACK);
 
     while(1) {
         
@@ -150,8 +161,10 @@ int main() {
             LCD_drawString(10, 32, message, GREEN, BLACK);
             LCD_progressBar(10, 44, 10, percentage);
             
+            Calculate_FPS(10, 60);
+            
          // Heartbeat code
-            while(_CP0_GET_COUNT() < 24000000)
+            while(_CP0_GET_COUNT() < 2400000)
             {
                 
                 while(!PORTBbits.RB4)

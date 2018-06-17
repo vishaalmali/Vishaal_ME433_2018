@@ -6,72 +6,130 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/ScrollView01"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:layout_height="wrap_content">
 
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Vishaal Mali"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <SeekBar
-            android:id="@+id/seek1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:progress="20"
-            android:secondaryProgress="20"
-            android:paddingTop="10dp"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:paddingBottom="10dp"
-            />
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView01"
-            android:text="initial value "
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nothing yet"
+                android:id="@+id/cameraStatus"/>
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send slider value" />
+            <!--<SurfaceView-->
+            <!--android:id="@+id/surfaceview"-->
+            <!--android:layout_width="640px"-->
+            <!--android:layout_height="480px" />-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
 
-        <TextView
-            android:id="@+id/textView02"
-            android:text="nothing from button yet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+                tools:layout_editor_absoluteX="165dp">
 
-        <ScrollView
-            android:id="@+id/ScrollView01"
-            android:layout_width="wrap_content"
-            android:layout_height="250dip">
+                <SurfaceView
+                    android:id="@+id/surfaceview"
+                    android:layout_width="600px"
+                    android:layout_height="400px"
+                    android:layout_margin="10dp" />
+
+                <TextureView
+                    android:id="@+id/textureview"
+                    android:layout_width="600px"
+                    android:layout_height="400px"
+                    android:layout_margin="10dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView01"
+                android:text="Red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <SeekBar
+                android:id="@+id/seek1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:progress="10"
+                android:secondaryProgress="10"
+                />
+
+            <TextView
+                android:id="@+id/textView02"
+                android:text="Blue and Green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <SeekBar
+                android:id="@+id/seek2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:progress="20"
+                android:secondaryProgress="20"
+                />
 
             <TextView
                 android:id="@+id/textView03"
+                android:text="Blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <SeekBar
+                android:id="@+id/seek3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:progress="20"
+                android:secondaryProgress="20"
+                />
+
+
+            <TextView
+                android:id="@+id/textView04"
+                android:text="initial value "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                android:id="@+id/textView04"
                 android:text="nothing from usb yet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/holo_green_light"
                 />
-        </ScrollView>
+
+            <!--<TextureView-->
+            <!--android:id="@+id/textureview"-->
+            <!--android:layout_width="640px"-->
+            <!--android:layout_height="480px"-->
+            <!--/>-->
 
 
+        </LinearLayout>
 
-
-
-    </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
